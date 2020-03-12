@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class InfectedTurret : MonoBehaviour
 {
-    public GameObject target;
-
-    public GameObject turretBarrel;
-
+    [Header("Targeting")]
+    [Tooltip("Distance that the turret can target you from")]
     public float viewRadius;
     [Range(0, 360)]
     public float viewAngle;
-
+    public GameObject turretBarrel;
     public LayerMask targetMask;
     public LayerMask obstacleMask;
+    private Vector3 origTransform;
+    private Quaternion origAngle;
+    private bool inSight = false;
 
-    public bool inSight = false;
+    [Header("Shooting")]
+    public GameObject bulletPrefab;
+    public Transform muzzlePoint;
+    public float rangedAttackDelay;
+    public float rangedBulletSpeed;
 
-    public Vector3 origTransform;
-    public Quaternion origAngle;
     private float timeCount = 0.0f;
-
+    private float rangedAttackRate;
     private void Start()
     {
         origTransform = turretBarrel.transform.position;
@@ -60,6 +63,7 @@ public class InfectedTurret : MonoBehaviour
             else if (inSight)
             {
                 turretBarrel.transform.LookAt(target.transform.position);
+                Shooting();
             }
 
         }
@@ -73,6 +77,17 @@ public class InfectedTurret : MonoBehaviour
             angleInDegrees += transform.eulerAngles.y;
         }
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
+
+    
+    public void Shooting()
+    {
+        if (Time.time > rangedAttackRate)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, muzzlePoint.transform.position, muzzlePoint.transform.rotation);
+            bullet.GetComponent<Rigidbody>().AddForce(muzzlePoint.transform.forward * rangedBulletSpeed);
+            rangedAttackRate = Time.time + rangedAttackDelay;
+        }
     }
 
    

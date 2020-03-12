@@ -292,14 +292,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &846953958 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4627990529542491806, guid: 1f9ff3304c0298d49ac1f9a97df23e6a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1233788736}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1233788736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -350,7 +344,7 @@ PrefabInstance:
     - target: {fileID: 3286020892910257604, guid: 1f9ff3304c0298d49ac1f9a97df23e6a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3286020892910257604, guid: 1f9ff3304c0298d49ac1f9a97df23e6a,
         type: 3}
@@ -366,34 +360,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4300807, guid: 1f9ff3304c0298d49ac1f9a97df23e6a, type: 3}
-      propertyPath: viewAngle
-      value: 131
-      objectReference: {fileID: 0}
-    - target: {fileID: 4300807, guid: 1f9ff3304c0298d49ac1f9a97df23e6a, type: 3}
-      propertyPath: targetMask.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 2342951963136279938, guid: 1f9ff3304c0298d49ac1f9a97df23e6a,
-        type: 3}
-      propertyPath: turretBarrel
-      value: 
-      objectReference: {fileID: 846953958}
-    - target: {fileID: 2342951963136279938, guid: 1f9ff3304c0298d49ac1f9a97df23e6a,
-        type: 3}
-      propertyPath: viewRadius
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2342951963136279938, guid: 1f9ff3304c0298d49ac1f9a97df23e6a,
-        type: 3}
-      propertyPath: viewAngle
-      value: 151
-      objectReference: {fileID: 0}
-    - target: {fileID: 2342951963136279938, guid: 1f9ff3304c0298d49ac1f9a97df23e6a,
-        type: 3}
-      propertyPath: targetMask.m_Bits
-      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f9ff3304c0298d49ac1f9a97df23e6a, type: 3}
@@ -581,5 +547,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
