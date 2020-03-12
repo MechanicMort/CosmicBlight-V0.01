@@ -150,8 +150,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1340950299861915165, guid: cc85926932ace3241841bc4439087f77,
     type: 3}
   muzzlePoint: {fileID: 3986501001974180840}
-  rangedAttackDelay: 2
-  rangedBulletSpeed: 40
+  rangedAttackDelay: 0.7
+  rangedBulletSpeed: 500
 --- !u!1 &4410350915389932568
 GameObject:
   m_ObjectHideFlags: 0

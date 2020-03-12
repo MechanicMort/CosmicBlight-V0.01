@@ -10,6 +10,8 @@ public class InfectedTurret : MonoBehaviour
     [Range(0, 360)]
     public float viewAngle;
     public GameObject turretBarrel;
+    public LayerMask playerMask;
+    public LayerMask enemyMask;
     public LayerMask targetMask;
     public LayerMask obstacleMask;
     private Vector3 origTransform;
@@ -21,7 +23,8 @@ public class InfectedTurret : MonoBehaviour
     public Transform muzzlePoint;
     public float rangedAttackDelay;
     public float rangedBulletSpeed;
-
+    [Header("Other")]
+    public bool isHacked = false;
     private float timeCount = 0.0f;
     private float rangedAttackRate;
     private void Start()
@@ -32,6 +35,7 @@ public class InfectedTurret : MonoBehaviour
 
     private void Update()
     {
+        CheckTurretStatus();
         FindVisibleTarget();
     }
 
@@ -87,7 +91,26 @@ public class InfectedTurret : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, muzzlePoint.transform.position, muzzlePoint.transform.rotation);
             bullet.GetComponent<Rigidbody>().AddForce(muzzlePoint.transform.forward * rangedBulletSpeed);
             rangedAttackRate = Time.time + rangedAttackDelay;
+            StartCoroutine(BulletDespawn(bullet));
         }
+    }
+
+    public void CheckTurretStatus()
+    {
+        if (isHacked)
+        {
+            targetMask = enemyMask;
+        }
+        else if (!isHacked)
+        {
+            targetMask = playerMask;
+        }
+    }
+
+    IEnumerator BulletDespawn(GameObject bullet)
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(bullet);
     }
 
    
