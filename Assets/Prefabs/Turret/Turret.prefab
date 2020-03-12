@@ -161,7 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7813444293710450539}
   m_Layer: 0
-  m_Name: BarrelObject
+  m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 5710626823799873348}
   - component: {fileID: 673702164596323777}
   m_Layer: 0
-  m_Name: Barrel
+  m_Name: Cylnder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
