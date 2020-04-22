@@ -34,13 +34,17 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         
-        Patrol();
+        //Patrol();
         PlayerDetection();
 
         if (playerDetected)
         {
             transform.LookAt(player.position);
             enemyNav.SetDestination(player.position);
+        }
+        else if (!playerDetected)
+        {
+            Patrol();
         }
 
     }
