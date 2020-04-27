@@ -15,8 +15,10 @@ public class InfectedTurret : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
     private Vector3 origTransform;
-    private Quaternion origAngle;
-    private bool inSight = false;
+    public Quaternion origAngle;
+    public bool inSight = false;
+    public Quaternion lastKnownAngle;
+    public Quaternion currentAngle;
 
     [Header("Shooting")]
     public GameObject bulletPrefab;
@@ -25,18 +27,43 @@ public class InfectedTurret : MonoBehaviour
     public float rangedBulletSpeed;
     [Header("Other")]
     public bool isHacked = false;
-    private float timeCount = 0.0f;
     private float rangedAttackRate;
+
+    private Transform target;
+    private void Awake()
+    {
+        origAngle = Quaternion.Euler(turretBarrel.transform.rotation.eulerAngles);
+    }
     private void Start()
     {
         origTransform = turretBarrel.transform.position;
-        origAngle = turretBarrel.transform.rotation;
+        //origAngle = turretBarrel.transform.rotation;
+        //origAngle = Quaternion.Euler(turretBarrel.transform.rotation.eulerAngles);
+       
+        
+       
     }
 
     private void Update()
     {
+        currentAngle = turretBarrel.transform.rotation;
         CheckTurretStatus();
         FindVisibleTarget();
+        Shoot();
+       // turretBarrel.transform.rotation = Quaternion.Lerp(turretBarrel.transform.rotation, origAngle, 0.05f);
+    }
+
+    void Shoot()
+    {
+        if (inSight)
+        {
+            turretBarrel.transform.LookAt(target.transform.position);
+            Shooting();
+        }
+        else if (!inSight)
+        {
+            turretBarrel.transform.rotation = Quaternion.Lerp(turretBarrel.transform.rotation, origAngle, 0.01f);
+        }
     }
 
     void FindVisibleTarget()
@@ -46,7 +73,7 @@ public class InfectedTurret : MonoBehaviour
         for (int i = 0; i < targetsInView.Length; i++)
         {
             float dist = Vector3.Distance(transform.position, targetsInView[i].transform.position);
-            Transform target = targetsInView[i].transform;
+             target = targetsInView[i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2 && inSight == false)
             {
@@ -56,18 +83,11 @@ public class InfectedTurret : MonoBehaviour
                 {
                     inSight = true;
                 }
+                
             }
-
-            else if (dist > viewRadius)
+            if (dist > viewRadius)
             {
-                timeCount = timeCount + Time.deltaTime;
-                turretBarrel.transform.rotation = Quaternion.RotateTowards(transform.rotation, origAngle, 200000f );
                 inSight = false;
-            }
-            else if (inSight)
-            {
-                turretBarrel.transform.LookAt(target.transform.position);
-                Shooting();
             }
 
         }
