@@ -10,7 +10,7 @@ public class PlayerMove : MonoBehaviour
 
     private Rigidbody rb;
 
-
+    public LayerMask enemyLayer;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -25,6 +25,18 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         Jump();
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Collider[] enemies = Physics.OverlapSphere(transform.position, 50f, enemyLayer);
+            int i = 0;
+
+            while (i < enemies.Length)
+            {
+                enemies[i].gameObject.GetComponent<EnemyAI>().playerDetected = true;
+                i++;
+            }
+        }
     }
 
     private void Movement()

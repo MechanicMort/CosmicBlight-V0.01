@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    [Header("Enemy Type")]
+    public bool isWalker;
+    public bool isSpotter;
+    public bool isDog;
     //For enemy FOV
     [Header("Detection range")]
     [Range(0, 360)] public float viewAngle;
@@ -21,34 +25,80 @@ public class EnemyAI : MonoBehaviour
     [Header("Other")]
     public LayerMask targetMask;
     public LayerMask wallMask;
+    public LayerMask enemyLayer;
     //public LayerMask enemyLayer;
     public bool playerDetected = false;
-
+    public bool detectedBySpotter = false;
+    public Vector3 lastKnownPos;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyNav = GetComponent<NavMeshAgent>();
+        
     }
 
 
     private void Update()
     {
-        
-        //Patrol();
-        PlayerDetection();
+     
+        if (isWalker)
+        {
+            PlayerDetection();
 
-        if (playerDetected)
-        {
-            transform.LookAt(player.position);
-            enemyNav.SetDestination(player.position);
+            if (playerDetected)
+            {
+                transform.LookAt(player.position);
+                enemyNav.SetDestination(player.position);
+            }
+            else if (!playerDetected)
+            {
+                Patrol();
+            }
         }
-        else if (!playerDetected)
+
+        if (isSpotter)
         {
-            Patrol();
+            PlayerDetection();
         }
+       
 
     }
 
+    public void GoToLastKnownPosition()
+    {
+        enemyNav.SetDestination(lastKnownPos);
+        if (transform.position.x == lastKnownPos.x && transform.position.z == lastKnownPos.z)
+        {
+            
+        }
+    }
+
+    IEnumerator rotateInfected()
+    {
+        yield return new WaitForSeconds(0.5f);
+        transform.Rotate(0, 10, 0 * Time.deltaTime);
+        yield return new WaitForSeconds(0.5f);
+        transform.Rotate(0, -10, 0 * Time.deltaTime);
+    }
+
+    public void GetPlayerPos()
+    {
+        lastKnownPos = player.gameObject.transform.position;
+    }
+
+    public void AlertNearbyEnemies()
+    {
+        Collider[] enemies = Physics.OverlapSphere(transform.position, 50f, enemyLayer);
+        int i = 0;
+
+        while (i < enemies.Length)
+        {
+            enemies[i].gameObject.GetComponent<EnemyAI>().GetPlayerPos();
+            enemies[i].gameObject.GetComponent<EnemyAI>().GoToLastKnownPosition();
+           // enemies[i].gameObject.GetComponent<EnemyAI>().playerDetected = true;
+            i++;
+        }
+    }
     private void PlayerDetection()
     {
         Collider[] playersInView = Physics.OverlapSphere(transform.position, viewDistance, targetMask);
@@ -63,7 +113,17 @@ public class EnemyAI : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, dirToTarget, distanceToTarget, wallMask))
                 {
-                    playerDetected = true;
+                    if (isWalker) 
+                    {
+                        playerDetected = true;
+                    }
+                        
+
+                    if (isSpotter)
+                    {
+                        
+                       AlertNearbyEnemies();
+                    }
                 }
                 else
                 {

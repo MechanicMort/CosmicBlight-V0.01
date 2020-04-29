@@ -243,7 +243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &117179308
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -613,7 +613,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1340950299861915165, guid: cc85926932ace3241841bc4439087f77,
     type: 3}
   muzzlePoint: {fileID: 660311731}
-  rangedAttackDelay: 0.7
+  rangedAttackDelay: 0.3
   rangedBulletSpeed: 500
   isHacked: 0
 --- !u!4 &660311731 stripped
@@ -724,6 +724,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InfectedTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162439465903463043, guid: a0ec5df9704ab2a45841134543961fc8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2832663955412844835, guid: a0ec5df9704ab2a45841134543961fc8,
         type: 3}
@@ -1199,6 +1204,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret
       objectReference: {fileID: 0}
+    - target: {fileID: 2148916314877339876, guid: 1f9ff3304c0298d49ac1f9a97df23e6a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3286020892910257604, guid: 1f9ff3304c0298d49ac1f9a97df23e6a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1520,14 +1530,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298784031}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.07, y: 1.13, z: -11.88}
+  m_LocalRotation: {x: -0, y: 0.9367642, z: -0, w: 0.34996137}
+  m_LocalPosition: {x: -17.23, y: 1.13, z: -11.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 330606743}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 139.03001, z: 0}
 --- !u!114 &1298784036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1543,6 +1553,9 @@ MonoBehaviour:
   jumpForce: 1
   moveSpeed: 5
   raycastDistance: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!54 &1298784037
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1577,7 +1590,9 @@ GameObject:
   - component: {fileID: 1457841917}
   - component: {fileID: 1457841916}
   - component: {fileID: 1457841915}
-  m_Layer: 0
+  - component: {fileID: 1457841919}
+  - component: {fileID: 1457841920}
+  m_Layer: 9
   m_Name: SpotterAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1652,12 +1667,58 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457841914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.198871, y: 1, z: -7.8924522}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -11.198871, y: 1.54, z: -23.93}
+  m_LocalScale: {x: 1, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1457841919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457841914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46f8add0546fb6f4190bd79c0e995081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWalker: 0
+  isSpotter: 1
+  isDog: 0
+  viewAngle: 40
+  viewDistance: 20
+  player: {fileID: 0}
+  isPatrol: 0
+  points: []
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 256
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  playerDetected: 0
+--- !u!54 &1457841920
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457841914}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1688701062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,6 +1911,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InfectedAI
       objectReference: {fileID: 0}
+    - target: {fileID: 2605953259895355741, guid: cb3d515e2ce5e2344a30f0bdd2299725,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2605953259895355728, guid: cb3d515e2ce5e2344a30f0bdd2299725,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1863,7 +1929,7 @@ PrefabInstance:
     - target: {fileID: 2605953259895355728, guid: cb3d515e2ce5e2344a30f0bdd2299725,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -28.47
+      value: -23.43
       objectReference: {fileID: 0}
     - target: {fileID: 2605953259895355728, guid: cb3d515e2ce5e2344a30f0bdd2299725,
         type: 3}
@@ -1920,5 +1986,25 @@ PrefabInstance:
       propertyPath: points.Array.data[2]
       value: 
       objectReference: {fileID: 1688701063}
+    - target: {fileID: 2605953259895355740, guid: cb3d515e2ce5e2344a30f0bdd2299725,
+        type: 3}
+      propertyPath: isWalker
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2605953259895355740, guid: cb3d515e2ce5e2344a30f0bdd2299725,
+        type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 2605953259895355740, guid: cb3d515e2ce5e2344a30f0bdd2299725,
+        type: 3}
+      propertyPath: isPatrol
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2605953259925003784, guid: cb3d515e2ce5e2344a30f0bdd2299725,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb3d515e2ce5e2344a30f0bdd2299725, type: 3}
