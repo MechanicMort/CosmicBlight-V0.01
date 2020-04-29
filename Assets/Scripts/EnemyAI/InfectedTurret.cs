@@ -10,6 +10,8 @@ public class InfectedTurret : MonoBehaviour
     [Range(0, 360)]
     public float viewAngle;
     public GameObject turretBarrel;
+    public GameObject turretLight;
+    public GameObject spinningBarrel;
     public LayerMask playerMask;
     public LayerMask enemyMask;
     public LayerMask targetMask;
@@ -59,10 +61,15 @@ public class InfectedTurret : MonoBehaviour
         {
             turretBarrel.transform.LookAt(target.transform.position);
             Shooting();
+            turretLight.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+            spinningBarrel.gameObject.transform.Rotate(0, 0, 360 * Time.deltaTime);
+           
         }
         else if (!inSight)
         {
             turretBarrel.transform.rotation = Quaternion.Lerp(turretBarrel.transform.rotation, origAngle, 0.01f);
+             //turretBarrel.transform.rotation = Quaternion.LookRotation(origAngle.eulerAngles);
+            turretLight.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
         }
     }
 
